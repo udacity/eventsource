@@ -15,7 +15,7 @@ import (
 // It will try and reconnect if the connection is lost, respecting both
 // received retry delays and event id's.
 type Stream struct {
-	c           *http.Client
+	c           HTTPClient
 	req         *http.Request
 	lastEventId string
 	retry       time.Duration
@@ -32,6 +32,10 @@ type Stream struct {
 	isClosed bool
 	// isClosedMutex is a mutex protecting concurrent read/write access of isClosed
 	isClosedMutex sync.RWMutex
+}
+
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
 }
 
 type SubscriptionError struct {
@@ -61,7 +65,7 @@ func SubscribeWithRequest(lastEventId string, request *http.Request) (*Stream, e
 
 // SubscribeWith takes a http client and request providing customization over both headers and
 // control over the http client settings (timeouts, tls, etc)
-func SubscribeWith(lastEventId string, client *http.Client, request *http.Request) (*Stream, error) {
+func SubscribeWith(lastEventId string, client HTTPClient, request *http.Request) (*Stream, error) {
 	stream := &Stream{
 		c:           client,
 		req:         request,
@@ -70,7 +74,6 @@ func SubscribeWith(lastEventId string, client *http.Client, request *http.Reques
 		Events:      make(chan Event),
 		Errors:      make(chan error),
 	}
-	stream.c.CheckRedirect = checkRedirect
 
 	r, err := stream.connect()
 	if err != nil {
@@ -105,7 +108,7 @@ func (stream *Stream) markStreamClosed() {
 
 // Go's http package doesn't copy headers across when it encounters
 // redirects so we need to do that manually.
-func checkRedirect(req *http.Request, via []*http.Request) error {
+func CheckRedirect(req *http.Request, via []*http.Request) error {
 	if len(via) >= 10 {
 		return errors.New("stopped after 10 redirects")
 	}
