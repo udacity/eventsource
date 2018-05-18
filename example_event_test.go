@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/donovanhide/eventsource"
+	"github.com/udacity/eventsource"
 )
 
 type TimeEvent time.Time
