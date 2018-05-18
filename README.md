@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/donovanhide/eventsource?status.svg)](http://godoc.org/github.com/donovanhide/eventsource)
+[![GoDoc](https://godoc.org/github.com/udacity/eventsource?status.svg)](http://godoc.org/github.com/udacity/eventsource)
 [![CircleCI](https://circleci.com/gh/donovanhide/eventsource.svg?style=svg)](https://circleci.com/gh/donovanhide/eventsource)
 
 
@@ -8,11 +8,11 @@ Eventsource implements a  [Go](http://golang.org/) implementation of  client and
 
 ## Installation
 
-    go get github.com/donovanhide/eventsource
+    go get github.com/udacity/eventsource
 
 ## Documentation
 
-* [Reference](http://godoc.org/github.com/donovanhide/eventsource)
+* [Reference](http://godoc.org/github.com/udacity/eventsource)
 
 ## License
 

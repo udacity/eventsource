@@ -3,7 +3,7 @@ package eventsource_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/donovanhide/eventsource"
+	"github.com/udacity/eventsource"
 	"net"
 	"net/http"
 )
